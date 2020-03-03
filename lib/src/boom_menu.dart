@@ -17,10 +17,15 @@ class BoomMenu extends StatefulWidget {
   final Color foregroundColor;
   final double elevation;
   final ShapeBorder fabMenuBorder;
+  final Alignment fabAlignment;
 
   final double marginLeft;
   final double marginRight;
   final double marginBottom;
+
+  final double fabPaddingLeft;
+  final double fabPaddingRight;
+  final double fabPaddingTop;
 
   /// The color of the background overlay.
   final Color overlayColor;
@@ -72,13 +77,17 @@ class BoomMenu extends StatefulWidget {
     this.animatedIcon,
     this.animatedIconTheme,
     this.child,
-    this.marginBottom = 16,
+    this.marginBottom = 0,
     this.marginLeft = 16,
-    this.marginRight = 16,
+    this.marginRight = 0,
     this.onOpen,
     this.onClose,
     this.overlayVisible = false,
     this.fabMenuBorder = const CircleBorder(),
+    this.fabAlignment = Alignment.centerRight,
+    this.fabPaddingRight = 0,
+    this.fabPaddingLeft = 0,
+    this.fabPaddingTop = 0,
     this.onPress,
     this.animationSpeed = 150
   });
@@ -216,20 +225,46 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
     );
 
     return Positioned(
-      left: widget.marginLeft - 16,
-      bottom: widget.marginBottom - 16,
-      right: widget.marginRight - 16,
+      left: widget.marginLeft + 16,
+      bottom: widget.marginBottom,
+      right: widget.marginRight,
       child: Container(
+        alignment: Alignment.bottomCenter,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: List.from(fabChildren)
+          /*children: List.from(fabChildren)
             ..add(
               Container(
                 margin: EdgeInsets.only(top: 8.0, right: 2.0),
                 child: animatedFloatingButton,
               ),
+            ),*/
+          children: <Widget> [
+            SizedBox(height: kToolbarHeight + 40),
+            Visibility(
+              visible: _open,
+              child: Expanded(
+                child: ListView(
+                  children: List.from(fabChildren),
+                  reverse: true,
+                ),
+              ),
             ),
+            Align(
+              alignment: widget.fabAlignment,
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: widget.fabPaddingLeft,
+                  right: widget.fabPaddingRight,
+                  top: 8.0 + widget.fabPaddingTop,
+                ),
+                child: animatedFloatingButton,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -238,7 +273,7 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final children = [
-      if (!widget.overlayVisible) _renderOverlay(),
+      !widget.overlayVisible ? _renderOverlay() : Container(),
       _renderButton(),
     ];
 
