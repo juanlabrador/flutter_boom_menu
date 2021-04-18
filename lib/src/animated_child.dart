@@ -69,7 +69,7 @@ class AnimatedChild extends AnimatedWidget {
                                       : titleColor,
                                   fontSize: 16.0),
                         ),
-                        if (subtitle != null) SizedBox(height: 2.0),
+                        if (subtitle != null) SizedBox(height: 1.0),
                         if (subtitle != null)
                           Text(
                             subtitle ?? '',
@@ -93,13 +93,14 @@ class AnimatedChild extends AnimatedWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width - 30,
+      height: 90.0,
       padding: EdgeInsets.only(bottom: 72 - animation!.value),
       child: GestureDetector(
         onTap: _performAction,
         child: Card(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7.0),
+            borderRadius: BorderRadius.circular(5.0),
           ),
           //width: animation.value,
           color: backgroundColor,
