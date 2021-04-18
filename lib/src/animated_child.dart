@@ -89,14 +89,10 @@ class AnimatedChild extends AnimatedWidget {
               ],
             ),
           )
-        : Container(
-            width: 0.0,
-            height: 0.0,
-          );
+        : Container();
 
     return Container(
       width: MediaQuery.of(context).size.width - 30,
-      height: 80.0,
       padding: EdgeInsets.only(bottom: 72 - animation!.value),
       child: GestureDetector(
         onTap: _performAction,

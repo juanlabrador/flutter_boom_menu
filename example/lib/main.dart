@@ -59,7 +59,7 @@ class MyAppState extends State<MyApp> with TickerProviderStateMixin {
             ),
             title: "Logout",
             titleColor: Colors.grey[850],
-            subtitle: "Lorem ipsum dolor sit amet, consectetur",
+            subtitle: "Lorem ipsum dolor sit amet, consectetur efewwefwe e wewg wgwg w wegw gwg w gew gw" ,
             subTitleColor: Colors.grey[850],
             backgroundColor: Colors.grey[50],
             onTap: () => print('THIRD CHILD'),
