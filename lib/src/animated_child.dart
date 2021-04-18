@@ -54,7 +54,7 @@ class AnimatedChild extends AnimatedWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 10.0),
+                    padding: const EdgeInsets.only(left: 8.0, right: 15.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
