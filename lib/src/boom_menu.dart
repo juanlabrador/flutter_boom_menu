@@ -273,7 +273,7 @@ class _BoomMenuState extends State<BoomMenu>
                 padding: EdgeInsets.only(
                   left: widget.fabPaddingLeft,
                   right: widget.fabPaddingRight,
-                  top: 8.0 + widget.fabPaddingTop,
+                  top: 5.0 + widget.fabPaddingTop,
                 ),
                 child: animatedFloatingButton,
               ),
