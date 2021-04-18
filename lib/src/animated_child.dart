@@ -69,7 +69,6 @@ class AnimatedChild extends AnimatedWidget {
                                       : titleColor,
                                   fontSize: 16.0),
                         ),
-                        if (subtitle != null) SizedBox(height: 1.0),
                         if (subtitle != null)
                           Text(
                             subtitle ?? '',
