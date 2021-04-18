@@ -13,8 +13,8 @@ class BoomMenu extends StatefulWidget {
   /// Used to get the button hidden on scroll. See examples for more info.
   final bool scrollVisible;
 
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final double elevation;
   final ShapeBorder fabMenuBorder;
   final Alignment fabAlignment;
@@ -34,22 +34,22 @@ class BoomMenu extends StatefulWidget {
   final double overlayOpacity;
 
   /// The animated icon to show as the main button child. If this is provided the [child] is ignored.
-  final AnimatedIconData animatedIcon;
+  final AnimatedIconData? animatedIcon;
 
   /// The theme for the animated icon.
-  final IconThemeData animatedIconTheme;
+  final IconThemeData? animatedIconTheme;
 
   /// The child of the main button, ignored if [animatedIcon] is non [null].
-  final Widget child;
+  final Widget? child;
 
   /// Executed when the dial is opened.
-  final VoidCallback onOpen;
+  final VoidCallback? onOpen;
 
   /// Executed when the dial is closed.
-  final VoidCallback onClose;
+  final VoidCallback? onClose;
 
   /// Executed when the dial is pressed. If given, the dial only opens on long press!
-  final VoidCallback onPress;
+  final VoidCallback? onPress;
 
   /// If true user is forced to close dial manually by tapping main button. WARNING: If true, overlay is not rendered.
   final bool overlayVisible;
@@ -57,47 +57,47 @@ class BoomMenu extends StatefulWidget {
   /// The speed of the animation
   final int animationSpeed;
 
-  final String title;
-  final String subtitle;
-  final Color titleColor;
-  final Color subTitleColor;
+  final String? title;
+  final String? subtitle;
+  final Color? titleColor;
+  final Color? subTitleColor;
 
-  BoomMenu({
-    this.children = const [],
-    this.scrollVisible = true,
-    this.title,
-    this.subtitle,
-    this.backgroundColor,
-    this.titleColor,
-    this.subTitleColor,
-    this.foregroundColor,
-    this.elevation = 6.0,
-    this.overlayOpacity = 0.8,
-    this.overlayColor = Colors.white,
-    this.animatedIcon,
-    this.animatedIconTheme,
-    this.child,
-    this.marginBottom = 0,
-    this.marginLeft = 16,
-    this.marginRight = 0,
-    this.onOpen,
-    this.onClose,
-    this.overlayVisible = false,
-    this.fabMenuBorder = const CircleBorder(),
-    this.fabAlignment = Alignment.centerRight,
-    this.fabPaddingRight = 0,
-    this.fabPaddingLeft = 0,
-    this.fabPaddingTop = 0,
-    this.onPress,
-    this.animationSpeed = 150
-  });
+  BoomMenu(
+      {this.children = const [],
+      this.scrollVisible = true,
+      this.title,
+      this.subtitle,
+      this.backgroundColor,
+      this.titleColor,
+      this.subTitleColor,
+      this.foregroundColor,
+      this.elevation = 6.0,
+      this.overlayOpacity = 0.8,
+      this.overlayColor = Colors.white,
+      this.animatedIcon,
+      this.animatedIconTheme,
+      this.child,
+      this.marginBottom = 0,
+      this.marginLeft = 16,
+      this.marginRight = 0,
+      this.onOpen,
+      this.onClose,
+      this.overlayVisible = false,
+      this.fabMenuBorder = const CircleBorder(),
+      this.fabAlignment = Alignment.centerRight,
+      this.fabPaddingRight = 0,
+      this.fabPaddingLeft = 0,
+      this.fabPaddingTop = 0,
+      this.onPress,
+      this.animationSpeed = 150});
 
   @override
   _BoomMenuState createState() => _BoomMenuState();
 }
 
-class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+class _BoomMenuState extends State<BoomMenu>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _controller;
 
   bool _open = false;
 
@@ -110,28 +110,29 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
     );
   }
 
-  Duration _calculateMainControllerDuration() =>
-      Duration(milliseconds: widget.animationSpeed + widget.children.length * (widget.animationSpeed / 5).round());
+  Duration _calculateMainControllerDuration() => Duration(
+      milliseconds: widget.animationSpeed +
+          widget.children.length * (widget.animationSpeed / 5).round());
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   void _performAnimation() {
     if (!mounted) return;
     if (_open) {
-      _controller.forward();
+      _controller?.forward();
     } else {
-      _controller.reverse();
+      _controller?.reverse();
     }
   }
 
   @override
   void didUpdateWidget(BoomMenu oldWidget) {
     if (oldWidget.children.length != widget.children.length) {
-      _controller.duration = _calculateMainControllerDuration();
+      _controller?.duration = _calculateMainControllerDuration();
     }
 
     super.didUpdateWidget(oldWidget);
@@ -142,9 +143,9 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
     setState(() {
       _open = newValue;
     });
-    if (newValue && widget.onOpen != null) widget.onOpen();
+    if (newValue && widget.onOpen != null) widget.onOpen!();
     _performAnimation();
-    if (!newValue && widget.onClose != null) widget.onClose();
+    if (!newValue && widget.onClose != null) widget.onClose!();
   }
 
   List<Widget> _getChildrenList() {
@@ -156,28 +157,29 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
 
           var childAnimation = Tween(begin: 0.0, end: 62.0).animate(
             CurvedAnimation(
-              parent: this._controller,
-              curve: Interval(0, singleChildrenTween * (index + 1),
+              parent: this._controller!,
+              curve: Interval(
+                0,
+                singleChildrenTween * (index + 1),
               ),
             ),
           );
 
           return AnimatedChild(
-            animation: childAnimation,
-            index: index,
-            visible: _open,
-            backgroundColor: child.backgroundColor,
-            elevation: child.elevation,
-            child: child.child,
-            title: child.title,
-            subtitle: child.subtitle,
-            titleColor: child.titleColor,
-            subTitleColor : child.subTitleColor,
-            onTap: child.onTap,
-            toggleChildren: () {
-              if (!widget.overlayVisible) _toggleChildren();
-            }
-          );
+              animation: childAnimation,
+              index: index,
+              visible: _open,
+              backgroundColor: child.backgroundColor,
+              elevation: child.elevation,
+              child: child.child,
+              title: child.title,
+              subtitle: child.subtitle,
+              titleColor: child.titleColor,
+              subTitleColor: child.subTitleColor,
+              onTap: child.onTap,
+              toggleChildren: () {
+                if (!widget.overlayVisible) _toggleChildren();
+              });
         })
         .toList()
         .reversed
@@ -204,8 +206,8 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
   Widget _renderButton() {
     var child = widget.animatedIcon != null
         ? AnimatedIcon(
-            icon: widget.animatedIcon,
-            progress: _controller,
+            icon: widget.animatedIcon!,
+            progress: _controller!,
             color: widget.animatedIconTheme?.color,
             size: widget.animatedIconTheme?.size,
           )
@@ -214,15 +216,16 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
     var fabChildren = _getChildrenList();
 
     var animatedFloatingButton = AnimatedFloatingButton(
-      visible: widget.scrollVisible,
-      backgroundColor: widget.backgroundColor,
-      foregroundColor: widget.foregroundColor,
-      elevation: widget.elevation,
-      onLongPress: _toggleChildren,
-      callback: (_open || widget.onPress == null) ? _toggleChildren : widget.onPress,
-      child: child,
-      shape: widget.fabMenuBorder
-    );
+        visible: widget.scrollVisible,
+        backgroundColor: widget.backgroundColor,
+        foregroundColor: widget.foregroundColor,
+        elevation: widget.elevation,
+        onLongPress: _toggleChildren,
+        callback: (_open || widget.onPress == null)
+            ? _toggleChildren
+            : widget.onPress,
+        child: child,
+        shape: widget.fabMenuBorder);
 
     return Positioned(
       left: widget.marginLeft + 16,
@@ -242,15 +245,20 @@ class _BoomMenuState extends State<BoomMenu> with SingleTickerProviderStateMixin
                 child: animatedFloatingButton,
               ),
             ),*/
-          children: <Widget> [
+          children: <Widget>[
             SizedBox(height: kToolbarHeight + 40),
             Visibility(
               visible: _open,
               child: Expanded(
-                child: ListView(
-                  children: List.from(fabChildren),
-                  reverse: true,
-                ),
+                child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification: (overscroll) {
+                      overscroll.disallowGlow();
+                      return true;
+                    },
+                    child: ListView(
+                      children: List.from(fabChildren),
+                      reverse: true,
+                    )),
               ),
             ),
             Align(
