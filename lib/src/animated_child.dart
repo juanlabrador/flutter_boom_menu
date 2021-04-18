@@ -74,6 +74,7 @@ class AnimatedChild extends AnimatedWidget {
                           Text(
                             subtitle ?? '',
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                             style: subTitleTextStyle ??
                                 TextStyle(
                                     color: (subTitleColor == null)
