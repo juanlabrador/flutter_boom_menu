@@ -61,6 +61,8 @@ class BoomMenu extends StatefulWidget {
   final String? subtitle;
   final Color? titleColor;
   final Color? subTitleColor;
+  final TextStyle? titleTextStyle;
+  final TextStyle? subTitleTextStyle;
 
   BoomMenu(
       {this.children = const [],
@@ -89,7 +91,9 @@ class BoomMenu extends StatefulWidget {
       this.fabPaddingLeft = 0,
       this.fabPaddingTop = 0,
       this.onPress,
-      this.animationSpeed = 150});
+      this.animationSpeed = 150,
+      this.titleTextStyle,
+      this.subTitleTextStyle});
 
   @override
   _BoomMenuState createState() => _BoomMenuState();
@@ -176,6 +180,8 @@ class _BoomMenuState extends State<BoomMenu>
               subtitle: child.subtitle,
               titleColor: child.titleColor,
               subTitleColor: child.subTitleColor,
+              titleTextStyle: child.titleTextStyle,
+              subTitleTextStyle: child.subTitleTextStyle,
               onTap: child.onTap,
               toggleChildren: () {
                 if (!widget.overlayVisible) _toggleChildren();

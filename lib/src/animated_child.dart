@@ -45,6 +45,7 @@ class AnimatedChild extends AnimatedWidget {
         ? Container(
             width: animation!.value,
             height: animation!.value,
+            padding: EdgeInsets.only(left: 10),
             child: Row(
               children: <Widget>[
                 Padding(
