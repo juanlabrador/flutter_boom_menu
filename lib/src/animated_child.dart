@@ -45,7 +45,7 @@ class AnimatedChild extends AnimatedWidget {
         ? Container(
             width: animation!.value,
             height: animation!.value,
-            padding: EdgeInsets.only(left: 5),
+            padding: EdgeInsets.only(left: 5, right: 15.0),
             child: Row(
               children: <Widget>[
                 Padding(
@@ -54,7 +54,7 @@ class AnimatedChild extends AnimatedWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 15.0),
+                    padding: const EdgeInsets.only(left: 5.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
